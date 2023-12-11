@@ -31,3 +31,13 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+
+html,
+body {
+  background: url(../public/images/bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background-position: right 50%; */
+  height: 100%;
+  color: #373b64;
+}
