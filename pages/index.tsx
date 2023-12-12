@@ -19,7 +19,7 @@ export default function Home() {
         />
       </Head>
       <main
-        className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+        className={`flex min-h-screen flex-col items-center justify-center p-10 md:p-24 ${inter.className}`}
       >
         <Banner text="View stores nearby" handler={findStores} />
       </main>
