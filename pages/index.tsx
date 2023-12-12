@@ -1,6 +1,7 @@
 import Banner from "@/components/banner/Banner";
 import { Inter } from "next/font/google";
 import Head from "next/head";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +20,17 @@ export default function Home() {
         />
       </Head>
       <main
-        className={`flex min-h-screen flex-col items-center justify-center p-10 md:p-24 ${inter.className}`}
+        className={`flex min-h-screen flex-col sm:max-w-[72rem] mt-[2rem] mx-auto p-[1rem] md:p-10 lg:p-20 ${inter.className}`}
       >
         <Banner text="View stores nearby" handler={findStores} />
+        <div className="absolute top-0 right-0 lg:right-[20%] z-[1] ">
+          <Image
+            src="/images/hero.png"
+            alt="lady drinking coffee"
+            width={700}
+            height={400}
+          />
+        </div>
       </main>
     </>
   );
