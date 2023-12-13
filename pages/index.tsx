@@ -1,5 +1,6 @@
 import Banner from "@/components/banner/Banner";
-import { Inter } from "next/font/google";
+import Card from "@/components/card/Card";
+import { Inter, Poppins } from "next/font/google";
 import Head from "next/head";
 import Image from "next/image";
 
@@ -31,6 +32,7 @@ export default function Home() {
             height={400}
           />
         </div>
+        <Card />
       </main>
     </>
   );
