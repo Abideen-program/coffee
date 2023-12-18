@@ -13,9 +13,26 @@ const CoffeeStore = ({ store }: storeProps) => {
 
   console.log({ store, storeId });
 
+  if (router.isFallback) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen border border-green-500 p-3">
+        <p className="text-4xl font-bold">Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div>
-      Coffe Store Page for store {storeId}: {store.name}
+      <button
+        onClick={() => {
+          router.back();
+        }}
+      >
+        Go Back
+      </button>
+      <p>
+        Coffe Store Page for store {storeId}: {store.name}
+      </p>
     </div>
   );
 };
@@ -29,9 +46,13 @@ type props = {
 export const getStaticProps = async ({ params: { storeId } }: props) => {
   const store = coffeeStoresData.find((store) => {
     return store.id.toString() === storeId;
-  });
+  })!;
 
-  console.log({ store, storeId });
+  if (!store) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: { store },
