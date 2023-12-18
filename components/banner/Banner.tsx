@@ -7,10 +7,10 @@ const Banner = ({ text, handler }: Props) => {
   return (
     <div className="flex flex-col justify-center gap-4 z-10">
       <h1 className="text-3xl md:text-4xl lg:text-6xl font-extrabold flex flex-col md:flex-row md:gap-2">
-        <span className="text-white">Coffee</span>{" "}
+        <span className="text-[#DFE1E5]">Coffee</span>{" "}
         <span className="text-[#3A31C0]">Connoisseur</span>
       </h1>
-      <p className="font-medium text-white text-sm md:text-base">
+      <p className="font-medium text-[#DFE1E5] text-sm md:text-base">
         Discover your local coffee shops!
       </p>
       <button
