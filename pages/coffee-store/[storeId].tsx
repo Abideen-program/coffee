@@ -11,8 +11,6 @@ const CoffeeStore = ({ store }: storeProps) => {
 
   const { storeId } = router.query;
 
-  console.log({ store, storeId });
-
   if (router.isFallback) {
     return (
       <div className="flex flex-col items-center justify-center h-screen border border-green-500 p-3">
@@ -30,9 +28,11 @@ const CoffeeStore = ({ store }: storeProps) => {
       >
         Go Back
       </button>
-      <p>
-        Coffe Store Page for store {storeId}: {store.name}
-      </p>
+      <div>
+        <p>{store.address}</p>
+        <p>{store.name}</p>
+        <p>{store.neighbourhood}</p>
+      </div>
     </div>
   );
 };
@@ -60,8 +60,12 @@ export const getStaticProps = async ({ params: { storeId } }: props) => {
 };
 
 export const getStaticPaths = async () => {
+  const paths = coffeeStoresData.map((store) => {
+    return { params: { storeId: `${store.id}` } };
+  });
+
   return {
-    paths: [{ params: { storeId: "1" } }, { params: { storeId: "2" } }],
+    paths,
     fallback: true,
   };
 };
