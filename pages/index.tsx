@@ -4,6 +4,7 @@ import { Inter, Poppins } from "next/font/google";
 import Head from "next/head";
 import Image from "next/image";
 import coffeeStoresData from "../data/coffee-stores.json";
+import { fetchStores } from "@/lib/coffee-store";
 const inter = Inter({ subsets: ["latin"] });
 
 type props = {
@@ -64,23 +65,11 @@ export default function Home({ coffeeStores }: props) {
 }
 
 export const getStaticProps = async () => {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: "fsq3rqZ8a7FaMdBtt4vwmQjZ6XELiNYXzwsKiQWWb5ytEM8=",
-    },
-  };
-
-  const response = await fetch(
-    "https://api.foursquare.com/v3/places/search?query=coffee&ll=43.651229838005%2C-79.38636906500032&limit=10",
-    options
-  );
-  const data = await response.json();
+  const coffeeStores = await fetchStores();
 
   return {
     props: {
-      coffeeStores: data.results,
+      coffeeStores,
     },
   };
 };
