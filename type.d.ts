@@ -1,5 +1,5 @@
 type store = {
-  id: number;
+  fsq_id: string;
   name: string;
   imgUrl: srting;
   websiteUrl: string;
