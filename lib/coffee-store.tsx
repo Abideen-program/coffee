@@ -47,8 +47,14 @@ export const fetchStores = async () => {
   );
   const data = await response.json();
   const storesData = data.results.map((result: any, index: number) => {
-    return { ...result, imgUrl: photos![index] };
+    return {
+      id: result.fsq_id,
+      name: result.name,
+      address: result.location.address,
+      neighborhood: result.location.cross_street,
+      imgUrl: photos![index],
+    };
   });
-  console.log(storesData);
+
   return storesData;
 };

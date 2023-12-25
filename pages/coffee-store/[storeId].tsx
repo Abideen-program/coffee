@@ -10,7 +10,7 @@ type storeProps = {
 };
 
 const CoffeeStore = ({ store }: storeProps) => {
-  const { name, location, imgUrl } = store;
+  const { id, name, address, neighborhood, imgUrl } = store;
   const router = useRouter();
 
   const [rating, setRating] = useState<number>(0);
@@ -50,7 +50,7 @@ const CoffeeStore = ({ store }: storeProps) => {
             <h1 className="font-bold text-[#FEFDFE] text-4xl my-2">{name}</h1>
             <Image
               src={
-                store.imgUrl ||
+                imgUrl ||
                 "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
               }
               alt="coffee store"
@@ -60,29 +60,33 @@ const CoffeeStore = ({ store }: storeProps) => {
             />
           </div>
           <div className="flex flex-col gap-3 p-4 self-center rounded-2xl mt-[4rem] ml-2 text-[#373b64] border border-glassBorder backdrop-blur-[10px] bg-glass hover:bg-glassHover hover:border-borderHover transition-all duration-300`">
-            <div className="flex items-center mb-4">
-              <Image
-                src="/icons/places.svg"
-                width="24"
-                height="24"
-                alt="address"
-              />
-              <p className="pl-2 text-xl font-[700] m-0 leading-8">
-                {location.address}
-              </p>
-            </div>
+            {address && (
+              <div className="flex items-center mb-4">
+                <Image
+                  src="/icons/places.svg"
+                  width="24"
+                  height="24"
+                  alt="address"
+                />
+                <p className="pl-2 text-xl font-[700] m-0 leading-8">
+                  {address}
+                </p>
+              </div>
+            )}
 
-            <div className="flex items-center mb-4">
-              <Image
-                src="/icons/nearMe.svg"
-                width="24"
-                height="24"
-                alt="neighbourhood"
-              />
-              <p className="pl-2 text-xl font-[700] m-0 leading-8">
-                {location.cross_street}
-              </p>
-            </div>
+            {neighborhood && (
+              <div className="flex items-center mb-4">
+                <Image
+                  src="/icons/nearMe.svg"
+                  width="24"
+                  height="24"
+                  alt="neighbourhood"
+                />
+                <p className="pl-2 text-xl font-[700] m-0 leading-8">
+                  {neighborhood}
+                </p>
+              </div>
+            )}
 
             <div className="flex items-center mb-4">
               <Image
@@ -117,7 +121,7 @@ type props = {
 export const getStaticProps = async ({ params: { storeId } }: props) => {
   const coffeeStores = await fetchStores();
   const store = coffeeStores.find((store: any) => {
-    return store.fsq_id.toString() === storeId;
+    return store.id.toString() === storeId;
   })!;
 
   if (!store) {
@@ -134,7 +138,7 @@ export const getStaticProps = async ({ params: { storeId } }: props) => {
 export const getStaticPaths = async () => {
   const coffeeStores = await fetchStores();
   const paths = coffeeStores.map((store: any) => {
-    return { params: { storeId: `${store.fsq_id}` } };
+    return { params: { storeId: `${store.id}` } };
   });
 
   return {
