@@ -16,18 +16,18 @@ const Card = ({ name, imgUrl, href }: Props) => {
             className={`border border-glassBorder p-4 rounded-md backdrop-blur-[10px] bg-glass hover:bg-glassHover hover:border-borderHover transition-all duration-300`}
           >
             <div className="mb-2">
-              <h2 className="font-extrabold text-ellipsis whitespace-nowrap text-lg overflow-hidden w-[256px]">
+              <h2 className="font-extrabold text-ellipsis whitespace-nowrap text-lg overflow-hidden">
                 {name}
               </h2>
             </div>
 
-            <div className="text-teal-50">
+            <div className="text-teal-50 border">
               <Image
                 src={imgUrl}
                 alt="coffee-shop"
                 width={260}
                 height={160}
-                className="rounded-md w-full h-[160px] object-fill"
+                className="rounded-md w-full h-[160px] object-cover"
               />
             </div>
           </div>

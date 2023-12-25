@@ -5,4 +5,8 @@ type store = {
   websiteUrl: string;
   address: string;
   neighbourhood: string;
+  location: {
+    address: string;
+    cross_street: string;
+  };
 };

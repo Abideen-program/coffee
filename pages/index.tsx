@@ -35,6 +35,7 @@ export default function Home({ coffeeStores }: props) {
             alt="lady drinking coffee"
             width={700}
             height={400}
+            priority={true}
           />
         </div>
         {coffeeStores.length > 0 && (
@@ -42,7 +43,7 @@ export default function Home({ coffeeStores }: props) {
             <h2 className="text-[#DFE1E5] text-3xl font-semibold my-8">
               Toronto Stores
             </h2>
-            <div className="mb-7 grid md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
+            <div className="mb-7 grid md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center">
               {coffeeStores.map((store) => {
                 return (
                   <Card

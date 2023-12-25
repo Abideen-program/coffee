@@ -3,12 +3,14 @@ import coffeeStoresData from "../../data/coffee-stores.json";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
+import { fetchStores } from "@/lib/coffee-store";
 
 type storeProps = {
   store: store;
 };
 
 const CoffeeStore = ({ store }: storeProps) => {
+  const { name, location, imgUrl } = store;
   const router = useRouter();
 
   const [rating, setRating] = useState<number>(0);
@@ -28,7 +30,7 @@ const CoffeeStore = ({ store }: storeProps) => {
   return (
     <>
       <Head>
-        <title>{store.name}</title>
+        <title>{name}</title>
         <meta
           name="description"
           content="This is a store with good coffee output"
@@ -45,13 +47,14 @@ const CoffeeStore = ({ store }: storeProps) => {
             >
               Back to home
             </p>
-            <h1 className="font-bold text-[#FEFDFE] text-4xl my-2">
-              {store.name}
-            </h1>
+            <h1 className="font-bold text-[#FEFDFE] text-4xl my-2">{name}</h1>
             <Image
-              src={store.imgUrl}
+              src={
+                store.imgUrl ||
+                "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+              }
               alt="coffee store"
-              width={600}
+              width={500}
               height={0}
               className="rounded-xl max-w-full h-[360px] align-middle border-none"
             />
@@ -65,7 +68,7 @@ const CoffeeStore = ({ store }: storeProps) => {
                 alt="address"
               />
               <p className="pl-2 text-xl font-[700] m-0 leading-8">
-                {store.address}
+                {location.address}
               </p>
             </div>
 
@@ -77,7 +80,7 @@ const CoffeeStore = ({ store }: storeProps) => {
                 alt="neighbourhood"
               />
               <p className="pl-2 text-xl font-[700] m-0 leading-8">
-                {store.neighbourhood}
+                {location.cross_street}
               </p>
             </div>
 
@@ -112,8 +115,9 @@ type props = {
 };
 
 export const getStaticProps = async ({ params: { storeId } }: props) => {
-  const store = coffeeStoresData.find((store) => {
-    return store.id.toString() === storeId;
+  const coffeeStores = await fetchStores();
+  const store = coffeeStores.find((store: any) => {
+    return store.fsq_id.toString() === storeId;
   })!;
 
   if (!store) {
@@ -128,8 +132,9 @@ export const getStaticProps = async ({ params: { storeId } }: props) => {
 };
 
 export const getStaticPaths = async () => {
-  const paths = coffeeStoresData.map((store) => {
-    return { params: { storeId: `${store.id}` } };
+  const coffeeStores = await fetchStores();
+  const paths = coffeeStores.map((store: any) => {
+    return { params: { storeId: `${store.fsq_id}` } };
   });
 
   return {
