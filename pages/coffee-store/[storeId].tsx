@@ -45,7 +45,7 @@ const CoffeeStore = ({ store }: storeProps) => {
               }}
               className="font-bold w-fit mt-24 text-lg leading-7 cursor-pointer"
             >
-              Back to home
+              ← Back to home
             </p>
             <h1 className="font-bold text-[#FEFDFE] text-4xl my-2">{name}</h1>
             <Image

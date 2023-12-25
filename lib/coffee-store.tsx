@@ -7,10 +7,10 @@ const unsplash = createApi({
 //function that returns url to get coffee stores
 const getUrlForCoffeeStores = (
   query: string,
-  longlat: string,
+  latlong: string,
   limit: number
 ) => {
-  return `https://api.foursquare.com/v3/places/search?query=${query}&ll=${longlat}&limit=${limit}`;
+  return `https://api.foursquare.com/v3/places/search?query=${query}&ll=${latlong}&limit=${limit}`;
 };
 
 //function to returns an array of url for unsplash images
@@ -52,7 +52,7 @@ export const fetchStores = async () => {
       name: result.name,
       address: result.location.address,
       neighborhood: result.location.cross_street,
-      imgUrl: photos![index],
+      imgUrl: photos!?.length > 0 ? photos![index] : null,
     };
   });
 

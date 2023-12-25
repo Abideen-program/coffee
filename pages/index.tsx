@@ -3,8 +3,8 @@ import Card from "@/components/card/Card";
 import { Inter, Poppins } from "next/font/google";
 import Head from "next/head";
 import Image from "next/image";
-import coffeeStoresData from "../data/coffee-stores.json";
 import { fetchStores } from "@/lib/coffee-store";
+import useLocationTracker from "@/hooks/useLocationTracker";
 const inter = Inter({ subsets: ["latin"] });
 
 type props = {
@@ -12,9 +12,14 @@ type props = {
 };
 
 export default function Home({ coffeeStores }: props) {
+  const { latlong, handleTrackLocation, errorMessage } = useLocationTracker();
+
   const findStores = () => {
     console.log("Hi Coffee Store");
+    handleTrackLocation();
   };
+
+  console.log({ latlong, errorMessage });
 
   return (
     <>
