@@ -1,7 +1,7 @@
 //To create an API for unsplash images
 import { createApi } from "unsplash-js";
 const unsplash = createApi({
-  accessKey: process.env.UNSPLASH_ACCESS_KEY!,
+  accessKey: process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY!,
 });
 
 //function that returns url to get coffee stores
@@ -28,7 +28,9 @@ const getCoffeeStoresPhoto = async () => {
   return unsplashImage;
 };
 
-export const fetchStores = async () => {
+export const fetchStores = async (
+  latlong = "43.651229838005%2C-79.38636906500032"
+) => {
   //this calls the function to returns an array of url for unsplash images
   const photos = await getCoffeeStoresPhoto();
 
@@ -36,17 +38,16 @@ export const fetchStores = async () => {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization: process.env.COFFEE_STORE_API_KEY!,
+      Authorization: process.env.NEXT_PUBLIC_COFFEE_STORE_API_KEY!,
     },
   };
-
   //this calls the function that returns url to get coffee stores
   const response = await fetch(
-    getUrlForCoffeeStores("coffee", "43.651229838005%2C-79.38636906500032", 30),
+    getUrlForCoffeeStores("coffee", latlong, 30),
     options
   );
   const data = await response.json();
-  const storesData = data.results.map((result: any, index: number) => {
+  const storesData = data.results?.map((result: any, index: number) => {
     return {
       id: result.fsq_id,
       name: result.name,
