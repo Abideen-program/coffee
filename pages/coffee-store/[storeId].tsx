@@ -131,7 +131,7 @@ export const getStaticProps = async ({ params: { storeId } }: props) => {
   }
 
   return {
-    props: { store },
+    props: { store: store ? store : {} },
   };
 };
 

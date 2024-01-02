@@ -12,7 +12,7 @@ const useLocationTracker = () => {
     const longitude = position.coords.longitude;
 
     setLatlong(`${latitude},${longitude}`);
-    console.log({ latitude, longitude });
+    // console.log({ latitude, longitude });
     setErrorMessage("");
     setLocating(false);
   };

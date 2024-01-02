@@ -26,11 +26,9 @@ export default function Home({ coffeeStores }: props) {
   useEffect(() => {
     const setCoffeeStoreByLocation = async () => {
       if (latlong) {
-        console.log(latlong);
         try {
           const coffeeStores = await fetchStores(latlong);
           setLocatedStore(coffeeStores);
-          console.log(coffeeStores);
         } catch (error: any) {
           setLocatedStoreError(error.message);
         }
