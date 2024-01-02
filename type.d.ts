@@ -1,7 +1,7 @@
 type store = {
   id: string;
   name: string;
-  imgUrl: srting;
+  imgUrl: string;
   websiteUrl: string;
   address: string;
   neighborhood: string;

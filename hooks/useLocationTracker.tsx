@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+// import { storeContext } from "@/context/storeContext";
 
 const useLocationTracker = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [latlong, setLatlong] = useState<string>("");
   const [locating, setLocating] = useState<boolean>(false);
+
+  // const {state} = useContext(storeContext)
 
   const success = (position: {
     coords: { latitude: number; longitude: number };
@@ -12,7 +15,6 @@ const useLocationTracker = () => {
     const longitude = position.coords.longitude;
 
     setLatlong(`${latitude},${longitude}`);
-    // console.log({ latitude, longitude });
     setErrorMessage("");
     setLocating(false);
   };

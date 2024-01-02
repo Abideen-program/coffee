@@ -1,26 +1,38 @@
-import { createContext } from "react";
-import { ReactNode } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from "react";
 
-type Props = {
+type ChildrenProp = {
   children: ReactNode;
 };
 
-export const StoreContext = createContext({
-  latLong: "",
-  store: [],
-});
+type InitialState = {
+  latLong: string;
+  store: store[];
+};
 
-export const StoreProvider = ({ children }: Props) => {
-  const initialState = {
-    latLong: "",
-    store: [],
-  };
+type initialContextValueProp = {
+  state: InitialState;
+  setState: Dispatch<SetStateAction<InitialState>>;
+};
+
+const initialContextValue: initialContextValueProp = {
+  state: { latLong: "", store: [] },
+  setState: () => {},
+};
+
+export const StoreContext = createContext(initialContextValue);
+
+export const StoreProvider = ({ children }: ChildrenProp) => {
+  const [state, setState] = useState(initialContextValue.state);
+
+  const value = { state, setState };
 
   return (
-    <StoreContext.Provider
-      value={{ latLong: initialState.latLong, store: initialState.store }}
-    >
-      {children}
-    </StoreContext.Provider>
+    <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
   );
 };
