@@ -5,7 +5,8 @@ import Head from "next/head";
 import Image from "next/image";
 import { fetchStores } from "@/lib/coffee-store";
 import useLocationTracker from "@/hooks/useLocationTracker";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { StoreContext } from "@/context/storeContext";
 const inter = Inter({ subsets: ["latin"] });
 
 type props = {
@@ -13,8 +14,11 @@ type props = {
 };
 
 export default function Home({ coffeeStores }: props) {
-  const { latlong, handleTrackLocation, errorMessage, locating } =
-    useLocationTracker();
+  const { state, setState } = useContext(StoreContext);
+
+  const { latlong, stores } = state;
+
+  const { handleTrackLocation, errorMessage, locating } = useLocationTracker();
 
   const [locatedStore, setLocatedStore] = useState<store[]>([]);
   const [locatedStoreError, setLocatedStoreError] = useState(null);
@@ -28,7 +32,7 @@ export default function Home({ coffeeStores }: props) {
       if (latlong) {
         try {
           const coffeeStores = await fetchStores(latlong);
-          setLocatedStore(coffeeStores);
+          setState({ ...state, stores: coffeeStores });
         } catch (error: any) {
           setLocatedStoreError(error.message);
         }
@@ -69,13 +73,13 @@ export default function Home({ coffeeStores }: props) {
           </p>
         )}
 
-        {locatedStore.length > 0 && (
+        {stores.length > 0 && (
           <>
             <h2 className="text-[#DFE1E5] text-3xl font-semibold my-8">
               Stores near me
             </h2>
             <div className="mb-7 grid md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center">
-              {locatedStore.map((store) => {
+              {stores.map((store) => {
                 return (
                   <Card
                     key={store.id}

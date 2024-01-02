@@ -11,8 +11,8 @@ type ChildrenProp = {
 };
 
 type InitialState = {
-  latLong: string;
-  store: store[];
+  latlong: string;
+  stores: store[];
 };
 
 type initialContextValueProp = {
@@ -21,7 +21,7 @@ type initialContextValueProp = {
 };
 
 const initialContextValue: initialContextValueProp = {
-  state: { latLong: "", store: [] },
+  state: { latlong: "", stores: [] },
   setState: () => {},
 };
 
