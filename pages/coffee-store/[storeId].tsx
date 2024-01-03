@@ -1,17 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import coffeeStoresData from "../../data/coffee-stores.json";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
 import { fetchStores } from "@/lib/coffee-store";
+import { isEmpty } from "@/lib/isEmpty";
+import { StoreContext } from "@/context/storeContext";
 
 type storeProps = {
   store: store;
 };
 
 const CoffeeStore = ({ store }: storeProps) => {
-  const { id, name, address, neighborhood, imgUrl } = store;
   const router = useRouter();
+  const storeId = router.query.storeId;
+  const [coffeeStore, setCoffeeStore] = useState(store);
+  const {
+    state: { stores },
+  } = useContext(StoreContext);
+
+  //This will help render the details of stores that are not pre-rendered
+  useEffect(() => {
+    //check if the store is empty on component mount
+    if (isEmpty(store)) {
+      //check if the length of array of stores from context is greater than one
+      if (stores.length > 0) {
+        const storeDetails = stores.find((store) => {
+          return store.id.toString() === storeId;
+        })!;
+        setCoffeeStore(storeDetails);
+      }
+    }
+  }, [storeId]);
+
+  const { id, name, address, neighborhood, imgUrl } = coffeeStore;
 
   const [rating, setRating] = useState<number>(0);
 
@@ -124,11 +146,11 @@ export const getStaticProps = async ({ params: { storeId } }: props) => {
     return store.id.toString() === storeId;
   })!;
 
-  if (!store) {
-    return {
-      notFound: true,
-    };
-  }
+  // if (!store) {
+  //   return {
+  //     notFound: true,
+  //   };
+  // }
 
   return {
     props: { store: store ? store : {} },
