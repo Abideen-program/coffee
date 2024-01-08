@@ -31,7 +31,10 @@ export default function Home({ coffeeStores }: props) {
     const setCoffeeStoreByLocation = async () => {
       if (latlong) {
         try {
-          const coffeeStores = await fetchStores(latlong);
+          const response = await fetch(
+            `/api/getStores?latlong=${latlong}&limit=30`
+          );
+          const coffeeStores = await response.json();
           setState({ ...state, stores: coffeeStores });
         } catch (error: any) {
           setLocatedStoreError(error.message);
